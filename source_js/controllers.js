@@ -1,44 +1,45 @@
-var mp4Controllers = angular.module('mp4Controllers', []);
+var foodentControllers = angular.module('foodentControllers', []);
 
-mp4Controllers.controller('FirstController', ['$scope', 'CommonData'  , function($scope, CommonData) {
-  $scope.data = "";
-   $scope.displayText = ""
+foodentControllers.controller('SettingsController', ['$scope', '$window', function ($scope, $window) {
+    $scope.url = $window.sessionStorage.baseurl;
 
-  $scope.setData = function(){
-    CommonData.setData($scope.data);
-    $scope.displayText = "Data set"
+    $scope.setUrl = function () {
+        $window.sessionStorage.baseurl = $scope.url;
+        $scope.displayText = "URL set";
 
-  };
-
+    };
 }]);
 
-mp4Controllers.controller('SecondController', ['$scope', 'CommonData' , function($scope, CommonData) {
-  $scope.data = "";
-
-  $scope.getData = function(){
-    $scope.data = CommonData.getData();
-
-  };
-
+foodentControllers.controller('LoginController', ['$scope', 'AuthService', function ($scope, AuthService) {
+    $scope.user = {email: '', password : ''};
+    $scope.login = function(){
+        //AuthService.
+        AuthService.login($scope.user).then(function(response){
+            console.log(response.data);
+        },function(response){
+            console.log(response.data);
+        });
+    }
 }]);
 
 
-mp4Controllers.controller('LlamaListController', ['$scope', '$http', 'Llamas', '$window' , function($scope, $http,  Llamas, $window) {
+foodentControllers.controller('SignupController', ['$scope', 'AuthService', function ($scope, AuthService) {
+    $scope.user = {email: '', password : ''};
 
-  Llamas.get().success(function(data){
-    $scope.llamas = data;
-  });
-
-
+    $scope.signup = function(){
+        AuthService.signup($scope.user).then(function(response){
+            console.log(response.data);
+        },function(response){
+            console.log(response.data);
+        });
+    };
 }]);
 
-mp4Controllers.controller('SettingsController', ['$scope' , '$window' , function($scope, $window) {
-  $scope.url = $window.sessionStorage.baseurl;
 
-  $scope.setUrl = function(){
-    $window.sessionStorage.baseurl = $scope.url;
-    $scope.displayText = "URL set";
 
-  };
-
+foodentControllers.controller('UserprofileController', ['$scope', function ($scope) {
+    $scope.user = {}
 }]);
+
+
+

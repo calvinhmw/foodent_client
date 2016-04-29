@@ -1,10 +1,9 @@
 {
-  "name": "mp4_client_starter",
+  "name": "foodent_client",
   "version": "1.0.0",
-  "homepage": "https://github.com/uiuc-web-programming/mp4_client_starter",
+  "homepage": "https://github.com/calvinhmw/foodent_client",
   "authors": [
-    "biplabdeka <biplab.deka@gmail.com>",
-    "sskhandek <sskhandek@gmail.com>"
+    "Mingwei Hu <mhu9@illinois.edu>"
   ],
   "dependencies": {
     "express": "^4.11.1",
