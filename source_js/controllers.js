@@ -24,8 +24,7 @@ foodentControllers.controller('LoginController', ['$scope', 'AuthService', funct
 
 
 foodentControllers.controller('SignupController', ['$scope', 'AuthService', function ($scope, AuthService) {
-    $scope.user = {email: '', password : ''};
-
+    $scope.user = {email: '', password : '', about: '', profileImageUrl: ""};
     $scope.signup = function(){
         AuthService.signup($scope.user).then(function(response){
             console.log(response.data);
@@ -35,10 +34,19 @@ foodentControllers.controller('SignupController', ['$scope', 'AuthService', func
     };
 }]);
 
+foodentControllers.controller('UserprofileController', ['$scope', 'UserService', 'AuthService', function ($scope, UserService, AuthService) {
+    $scope.user = {};
+    UserService.getUser().then(function(response){
+        console.log(response.data);
+        $scope.user = response.data.data;
+    },function(response){
+        console.log(response.data);
+    });
 
+    $scope.logout = function(){
+        AuthService.logout();
+    };
 
-foodentControllers.controller('UserprofileController', ['$scope', function ($scope) {
-    $scope.user = {}
 }]);
 
 

@@ -1,6 +1,6 @@
 var foodentServices = angular.module('foodentServices', []);
 
-foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT',function ($http, $q, API_ENDPOINT) {
+foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT', function ($http, $q, API_ENDPOINT) {
     var ACCESS_TOKEN = 'access_token';
     var isAuthenticated = false;
     var authToken;
@@ -32,6 +32,7 @@ foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT',function (
         };
         return $q(function (resolve, reject) {
             $http(config).then(function (response) {
+                storeUserCredentials(response.data.token);
                 resolve(response);
             }, function (response) {
                 reject(response);
@@ -47,9 +48,10 @@ foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT',function (
         };
         return $q(function (resolve, reject) {
             $http(config).then(function (response) {
-                storeUserCredentials(result.data.data);
+                storeUserCredentials(response.data.token);
                 resolve(response);
             }, function (response) {
+                console.log(response);
                 reject(response);
             });
         });
@@ -60,9 +62,11 @@ foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT',function (
         isAuthenticated = false;
         $http.defaults.headers.common.Authorization = undefined;
         window.localStorage.removeItem(ACCESS_TOKEN);
+        console.log(window.localStorage);
     }
 
-    var logout = function() {
+    var logout = function () {
+
         destroyUserCredentials();
     };
 
@@ -72,9 +76,26 @@ foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT',function (
         login: login,
         signup: signup,
         logout: logout,
-        isAuthenticated: function() {
+        isAuthenticated: function () {
             return isAuthenticated;
         }
     }
 
 }]);
+
+foodentServices.factory('UserService', ['$http', '$q', 'API_ENDPOINT', function ($http, $q, API_ENDPOINT) {
+    var getUser = function(queryParams){
+        var config = {
+            method: 'GET',
+            url: API_ENDPOINT.url + '/userprofile',
+            params: queryParams
+        };
+        return $http(config);
+    };
+
+    return {
+        getUser: getUser
+    };
+}]);
+
+

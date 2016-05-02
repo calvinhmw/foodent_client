@@ -6,6 +6,7 @@
     "Mingwei Hu <mhu9@illinois.edu>"
   ],
   "dependencies": {
+    "angular-ui-router": "^0.2.18",
     "express": "^4.11.1",
     "grunt": "~0.4.2",
     "grunt-contrib-clean": "^0.6.0",
